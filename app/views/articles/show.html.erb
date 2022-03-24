@@ -1,0 +1,29 @@
+<%= link_to "Edit Article", edit_article_path(@article) %> |
+<%= link_to "Index Articles", articles_path %>
+
+<% frame_id = dom_id(@article, "title_turbo_frame") %>
+
+<%= form_with model: @article, data: { turbo_frame: frame_id } do %>
+  <h1>タイトル</h1>
+  <turbo-frame id="<%= frame_id %>" class="inline-edit">
+    <h2><%= @article.title %></h2>
+
+    <%= link_to edit_polymorphic_path(@article) do %>
+      Edit <%= @article.class.human_attribute_name(:title) %>
+    <% end %>
+  </turbo-frame>
+<% end %>
+
+
+<% frame_id = dom_id(@article, "body_turbo_frame") %>
+
+<%= form_with model: @article, data: { turbo_frame: frame_id } do %>
+  <h1>本文</h1>
+  <turbo-frame id="<%= frame_id %>" class="inline-edit">
+    <h1><%= @article.body %></h1>
+
+    <%= link_to edit_polymorphic_path(@article) do %>
+      Edit <%= @article.class.human_attribute_name(:body) %>
+    <% end %>
+  </turbo-frame>
+<% end %>

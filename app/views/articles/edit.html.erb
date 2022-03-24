@@ -1,0 +1,36 @@
+<%= form_with model: @article do |f| %>
+  <%= link_to "Back", article_path(@article) %>
+
+  <%#= タイトル %>
+  <div>
+    <% frame_id = dom_id(@article, "title_turbo_frame") %>
+
+    <turbo-frame id="<%= frame_id %>">
+      <%= f.label :title %>
+      <%= f.text_field :title %>
+
+      <%# スタイルをうまいこと当ててやらないと普通の編集フォームでも保存ボタンやキャンセルボタンが表示されてしまう %>
+      <%= f.button class: "hidden inline-edit:inline" do %>
+        Save <%= @article.class.human_attribute_name(:title) %>
+      <% end %>
+      <%= link_to "Cancel", polymorphic_path(@article), class: "hidden inline-edit:inline"  %>
+    </turbo-frame>
+  </div>
+
+  <%#= 本文 %>
+  <div>
+    <% frame_id = dom_id(@article, "body_turbo_frame") %>
+
+    <turbo-frame id="<%= frame_id %>">
+      <%= f.label :body %>
+      <%= f.text_area :body %>
+
+      <%= f.button class: "hidden inline-edit:inline"   do %>
+        Save <%= @article.class.human_attribute_name(:body) %>
+      <% end %>
+      <%= link_to "Cancel", polymorphic_path(@article), class: "hidden inline-edit:inline" %>
+    </turbo-frame>
+  </div>
+
+  <%= f.button %>
+<% end %>
